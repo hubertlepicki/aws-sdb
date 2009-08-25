@@ -24,7 +24,7 @@ module AwsSdb
         token unless token.nil? || token.empty?
       params['MaxNumberOfDomains'] =
         max.to_s unless max.nil? || max.to_i == 0
-      doc = call(:get, params)
+      doc = call("GET", params)
       results = []
       REXML::XPath.each(doc, '//DomainName/text()') do |domain|
         results << domain.to_s
@@ -33,13 +33,13 @@ module AwsSdb
     end
 
     def create_domain(domain)
-      call(:post, { 'Action' => 'CreateDomain', 'DomainName'=> domain.to_s })
+      call("POST", { 'Action' => 'CreateDomain', 'DomainName'=> domain.to_s })
       nil
     end
 
     def delete_domain(domain)
       call(
-        :delete,
+        "DELETE",
         { 'Action' => 'DeleteDomain', 'DomainName' => domain.to_s }
       )
       nil
@@ -55,7 +55,7 @@ module AwsSdb
         token unless token.nil? || token.empty?
       params['MaxNumberOfItems'] =
         max.to_s unless max.nil? || max.to_i == 0
-      doc = call(:get, params)
+      doc = call("GET", params)
       results = []
       REXML::XPath.each(doc, '//ItemName/text()') do |item|
         results << item.to_s
@@ -78,13 +78,13 @@ module AwsSdb
           count += 1
         end
       end
-      call(:put, params)
+      call("PUT", params)
       nil
     end
 
     def get_attributes(domain, item)
       doc = call(
-        :get,
+        "GET",
         {
           'Action' => 'GetAttributes',
           'DomainName' => domain.to_s,
@@ -102,7 +102,7 @@ module AwsSdb
 
     def delete_attributes(domain, item)
       call(
-        :delete,
+        "DELETE",
         {
           'Action' => 'DeleteAttributes',
           'DomainName' => domain.to_s,
