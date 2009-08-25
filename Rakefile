@@ -28,3 +28,19 @@ end
 task :install => [:package] do
   sh %{sudo gem install pkg/#{gem_spec.name}-#{gem_spec.version}}
 end
+
+begin
+  require 'jeweler'
+  Jeweler::Tasks.new do |gemspec|
+    gemspec.name = "aws-sdb"
+    gemspec.summary = "Amazon SimpleDB with Ruby"
+    gemspec.description = ""
+    gemspec.email = "hubert.lepicki@amberbit.com"
+    gemspec.homepage = "http://github.com/hubertlepicki/aws-sdb"
+    gemspec.description = ""
+    gemspec.authors = ["Tim Dysinger"]
+  end
+rescue LoadError
+  puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
+end
+
